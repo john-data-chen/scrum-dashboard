@@ -45,8 +45,18 @@ button[type="submit"] {
   background-color: red;
 }
 
-.task-item {
-  display: flex;
-  align-items: center;
-  margin: 1em;
+.task-card {
+  border: 1px solid;
+  padding: 1em;
+  background-color: darkolivegreen;
+}
+
+.card-title {
+  font-weight: bold;
+  font-size: 2em;
+}
+
+.task-card p {
+  margin: 0.5em;
+  text-align: left;
 }
