@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # auto check
-.husky
+.husky/_
