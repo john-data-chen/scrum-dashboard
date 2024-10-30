@@ -2,7 +2,6 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
 }
 
 button {
@@ -34,6 +33,7 @@ label {
 input[type="text"],
 input[type="date"] {
   grid-column: 2 / 3;
+  width: 100%;
 }
 
 button[type="submit"] {
@@ -49,6 +49,7 @@ button[type="submit"] {
   border: 1px solid;
   padding: 1em;
   background-color: darkolivegreen;
+  margin: 1em;
 }
 
 .card-title {
