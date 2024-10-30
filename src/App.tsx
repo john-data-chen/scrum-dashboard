@@ -35,9 +35,31 @@ function App() {
   };
 
   const handleDeleteTask = (taskId: number) => {
-    const newTasks = tasks.filter((task) => task.id !== taskId);
-    setTasks(newTasks);
-    toast.warning('Task deleted successfully!')
+    toast.promise(
+      new Promise((resolve) => {
+        const confirmDelete = window.confirm('Are you sure you want to delete this task?');
+        if (confirmDelete) {
+          const newTasks = tasks.filter((task) => task.id !== taskId);
+          setTasks(newTasks);
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      }),
+      {
+        pending: 'Deleting task...',
+        success: {
+          render({ data }) {
+            if (data) {
+              return 'Task deleted successfully';
+            } else {
+              return 'Cancel deleting task';
+            }
+          },
+        },
+        error: 'Error deleting task',
+      }
+    );
   };
 
   return (
