@@ -7,15 +7,15 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const initialTasks: Task[] = [
-  { id: 1, title: 'example task', status: 'todo', dueDate: new Date(), description: 'delete me if you want' },
+  { id: 1, title: 'example task', status: 'To Do', dueDate: new Date(), owner: 'me', description: 'delete me if you want' },
 ];
 
 interface FormInput {
   assignee: string;
   title: string;
+  owner: string;
   description: string;
   status: string;
-  priority: string;
   dueDate: string;
 }
 
@@ -27,6 +27,7 @@ function App() {
     const newTask = {
       id: tasks.length + 1,
       title: data.title,
+      owner: data.owner,
       description: data.description,
       status: data.status,
       dueDate: new Date(data.dueDate),
@@ -74,10 +75,10 @@ function App() {
           id = "title"
         />
         {errors.title?.message && <p>{errors.title.message}</p>}
-        <label htmlFor="assignee">Assignee</label>
+        <label htmlFor="owner">Task Owner</label>
         <input
-          {...register('assignee')}
-          placeholder="Enter assignee"
+          {...register('owner')}
+          placeholder="Enter Task Owner"
         />
         <label htmlFor="description">Description</label>
         <textarea
@@ -90,7 +91,7 @@ function App() {
           <option value="doing">Doing</option>
           <option value="done">Done</option>
         </select>
-        <label htmlFor="priority">Due Date</label>
+        <label htmlFor="due-date">Due Date</label>
         <input
           {...register('dueDate')}
           type="date"
