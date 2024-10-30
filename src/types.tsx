@@ -1,6 +1,9 @@
 interface Task {
   id: number;
-  text: string;
+  title: string;
+  description: string;
+  status: string;
+  dueDate: Date;
 }
 
 export type { Task };

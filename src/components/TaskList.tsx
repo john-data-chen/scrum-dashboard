@@ -11,8 +11,8 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, onDelete }) => {
     <div className="task-list">
       {tasks.map((task) => (
         <div className="task-item" key={task.id}>
-          <button onClick={() => onDelete(task.id)}>Delete</button>
-          <span>{task.text}</span>
+          <button className="delete-button" onClick={() => onDelete(task.id)}>Delete</button>
+          <span>{task.title}</span>
         </div>
       ))}
     </div>
