@@ -12,6 +12,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@chakra-ui/react": "^3.0.2",
+    "@emotion/react": "^11.13.3",
     "date-fns": "^4.1.0",
     "firebase": "^11.0.1",
     "react": "^18.3.1",
