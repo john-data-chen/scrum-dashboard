@@ -7,6 +7,15 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {
+  Box,
+  Center,
+  Heading,
+  VStack,
+  Text,
+  HStack,
+  Button,
+} from "@chakra-ui/react";
 
 const initialTasks: Task[] = [
   {
@@ -26,8 +35,7 @@ interface FormInput {
   status: string;
   dueDate: Date;
 }
-
-export default function App() {
+const App = () => {
   const [tasks, setTasks] = useState(initialTasks);
   const {
     handleSubmit,
@@ -89,63 +97,89 @@ export default function App() {
   };
 
   return (
-    <div className="container">
-      <h1>Today main task</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="input">
-          <label htmlFor="title">Title (required)</label>
-          <Controller
-            name="title"
-            control={control}
-            rules={{ required: true }}
-            render={({ field }) => <input {...field} />}
-          />
-          {errors.title && (
-            <span className="error-message">This field is required</span>
-          )}
-        </div>
-        <label htmlFor="owner">Task Owner</label>
-        <Controller
-          name="owner"
-          control={control}
-          render={({ field }) => <input {...field} />}
-        />
-        <label htmlFor="description">Description</label>
-        <Controller
-          name="description"
-          control={control}
-          render={({ field }) => <input {...field} />}
-        />
-        <label htmlFor="status">Status</label>
-        <Controller
-          name="status"
-          control={control}
-          render={({ field }) => (
-            <select {...field}>
-              <option value="To Do">To Do</option>
-              <option value="In Progress">In Progress</option>
-              <option value="Done">Done</option>
-            </select>
-          )}
-        />
-        <label htmlFor="dueDate">Due Date</label>
-        <Controller
-          control={control}
-          name="dueDate"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <ReactDatePicker
-              selected={value}
-              onChange={onChange}
-              dateFormat="yyyy/MM/dd"
-              onBlur={onBlur}
-              minDate={new Date()}
-            />
-          )}
-        />
-        <button type="submit">Add Task</button>
-      </form>
-      <TaskList tasks={tasks} onDelete={handleDeleteTask} />
+    <>
       <ToastContainer />
-    </div>
+      <Box p={5} shadow="md" borderWidth="1px" borderRadius="lg">
+        <Center>
+          <VStack align="stretch">
+            <Heading mb={4}>Task List</Heading>
+            <HStack justify="flex-end">
+              <Text mb={1}>Title: </Text>
+              <Controller
+                name="title"
+                control={control}
+                render={({ field }) => (
+                  <input type="text" {...field} placeholder="Title" />
+                )}
+              />
+              {errors.title?.message && <Text>{errors.title.message}</Text>}
+            </HStack>
+            <HStack justify="flex-end">
+              <Text mb={1}>Owner: </Text>
+              <Controller
+                name="owner"
+                control={control}
+                render={({ field }) => (
+                  <input type="text" {...field} placeholder="Task Owner" />
+                )}
+              />
+              {errors.owner?.message && <Text>{errors.owner.message}</Text>}
+            </HStack>
+            <HStack justify="flex-end">
+              <Text mb={1}>Description: </Text>
+              <Controller
+                name="description"
+                control={control}
+                render={({ field }) => (
+                  <textarea {...field} placeholder="Description" />
+                )}
+              />
+            </HStack>
+            <HStack justify="flex-end">
+              <Text mb={1}>Status: </Text>
+              <Controller
+                name="status"
+                control={control}
+                render={({ field }) => (
+                  <select {...field}>
+                    <option value="To Do">To Do</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Done">Done</option>
+                  </select>
+                )}
+              />
+            </HStack>
+            <HStack justify="flex-end">
+              <Text mb={1}>Due Date: </Text>
+              <Controller
+                name="dueDate"
+                control={control}
+                render={({ field }) => (
+                  <ReactDatePicker
+                    selected={field.value}
+                    onChange={(date) => field.onChange(date)}
+                    dateFormat="yyyy/MM/dd"
+                  />
+                )}
+              />
+            </HStack>
+            <Button
+              colorScheme="teal"
+              type="submit"
+              onClick={handleSubmit(onSubmit)}
+            >
+              Submit
+            </Button>
+          </VStack>
+        </Center>
+      </Box>
+      <Box p={5} shadow="md" borderWidth="1px" borderRadius="lg">
+        <Center>
+          <TaskList tasks={tasks} onDelete={handleDeleteTask} />
+        </Center>
+      </Box>
+    </>
   );
-}
+};
+
+export default App;
