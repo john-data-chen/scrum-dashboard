@@ -27,9 +27,14 @@ interface FormInput {
   dueDate: Date;
 }
 
-function App() {
+export default function App() {
   const [tasks, setTasks] = useState(initialTasks);
-  const { handleSubmit, control, reset } = useForm<FormInput>({
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm<FormInput>({
     defaultValues: {
       title: "",
       owner: "",
@@ -84,16 +89,21 @@ function App() {
   };
 
   return (
-    <>
+    <div className="container">
       <h1>Today main task</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="title">Title (required)</label>
-        <Controller
-          name="title"
-          control={control}
-          rules={{ required: true }}
-          render={({ field }) => <input {...field} />}
-        />
+        <div className="input">
+          <label htmlFor="title">Title (required)</label>
+          <Controller
+            name="title"
+            control={control}
+            rules={{ required: true }}
+            render={({ field }) => <input {...field} />}
+          />
+          {errors.title && (
+            <span className="error-message">This field is required</span>
+          )}
+        </div>
         <label htmlFor="owner">Task Owner</label>
         <Controller
           name="owner"
@@ -132,13 +142,10 @@ function App() {
             />
           )}
         />
-
         <button type="submit">Add Task</button>
       </form>
       <TaskList tasks={tasks} onDelete={handleDeleteTask} />
       <ToastContainer />
-    </>
+    </div>
   );
 }
-
-export default App;
