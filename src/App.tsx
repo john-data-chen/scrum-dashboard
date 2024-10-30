@@ -16,7 +16,7 @@ interface FormInput {
   owner: string;
   description: string;
   status: string;
-  dueDate: string;
+  dueDate: Date;
 }
 
 function App() {
@@ -24,15 +24,20 @@ function App() {
   const { register, handleSubmit, formState: { errors } } = useForm<FormInput>();
 
   const onSubmit: SubmitHandler<FormInput> = (data) => {
+    try {
     const newTask = {
       id: tasks.length + 1,
       title: data.title,
       owner: data.owner,
       description: data.description,
       status: data.status,
-      dueDate: new Date(data.dueDate),
+      dueDate: data.dueDate ? new Date(data.dueDate) : new Date(),
     };
     setTasks([...tasks, newTask]);
+  } catch (error) {
+    console.error(error);
+    toast.error('Error adding task');
+  }
   };
 
   const handleDeleteTask = (taskId: number) => {
@@ -96,6 +101,7 @@ function App() {
           {...register('dueDate')}
           type="date"
           placeholder="Enter due date"
+          min = {new Date().toISOString().split('T')[0]}
         />
         <button type="submit">Add Task</button>
       </form>
