@@ -1,21 +1,21 @@
 import React from 'react';
-
-interface Task {
-  id: number;
-  text: string;
-}
+import { Task } from '../types';
 
 interface TaskListProps {
   tasks: Task[];
+  onDelete: (taskId: number) => void;
 }
 
-const TaskList: React.FC<TaskListProps> = ({ tasks }) => {
+const TaskList: React.FC<TaskListProps> = ({ tasks, onDelete }) => {
   return (
-    <ul>
+    <div className="task-list">
       {tasks.map((task) => (
-        <li key={task.id}>{task.text}</li>
+        <div className="task-item" key={task.id}>
+          <button onClick={() => onDelete(task.id)}>Delete</button>
+          <span>{task.text}</span>
+        </div>
       ))}
-    </ul>
+    </div>
   );
 };
 

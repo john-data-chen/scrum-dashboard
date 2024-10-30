@@ -1,11 +1,7 @@
 import './App.css';
 import TaskList from './components/TaskList';
 import { useState } from 'react';
-
-interface Task {
-  id: number;
-  text: string;
-}
+import { Task } from './types';
 
 const initialTasks: Task[] = [
   { id: 1, text: 'example task, delete me if you want' },
@@ -24,12 +20,17 @@ function App() {
     setNewTaskTitle('');
   };
 
+  const handleDeleteTask = (taskId: number) => {
+    const newTasks = tasks.filter((task) => task.id !== taskId);
+    setTasks(newTasks);
+  };
+
   return (
     <>
       <h1>Today main task</h1>
-      <input type="text" value={newTaskTitle} onChange={(e) => setNewTaskTitle(e.target.value)} />
+      <input type="text" placeholder="Enter task title" value={newTaskTitle} onChange={(e) => setNewTaskTitle(e.target.value)} />
       <button onClick={handleAddTask}>Add Task</button>
-      <TaskList tasks={tasks} />
+      <TaskList tasks={tasks} onDelete={handleDeleteTask}/>
     </>
   );
 }
