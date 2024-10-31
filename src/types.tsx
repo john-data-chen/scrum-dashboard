@@ -1,10 +1,10 @@
-interface Task {
+interface TaskFormType {
   id: number;
   title: string;
-  description: string;
+  description?: string;
   owner: string;
   status: string;
   dueDate: Date;
 }
 
-export type { Task };
+export type { TaskFormType };
