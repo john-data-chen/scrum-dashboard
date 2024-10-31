@@ -1,26 +1,38 @@
 import React from "react";
-import { Task } from "../types";
-import { format } from "date-fns";
+import { TaskFormType } from "../types";
+import { Box, Flex, Text, Badge, Button } from "@chakra-ui/react";
 
 interface TaskCardProps {
-  task: Task;
+  task: TaskFormType;
   onDelete: (taskId: number) => void;
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({ task, onDelete }) => {
   return (
-    <div className="task-card">
-      <h2 className="card-title">{task.title}</h2>
-      <p className="card-task-owner">task owner: {task.owner}</p>
-      <p className="card-description">task description: {task.description}</p>
-      <p className="card-status">Status: {task.status}</p>
-      <p className="card-due-date">
-        Due Date: {format(task.dueDate, "yyyy/MM/dd")}
-      </p>
-      <button className="delete-button" onClick={() => onDelete(task.id)}>
+    <Box bg="white" borderRadius="lg" p={4} boxShadow="md" mb={4}>
+      <Flex justifyContent="space-between" alignItems="center" mb={2}>
+        <Text fontSize="lg" fontWeight="bold">
+          {task.title}
+        </Text>
+        <Badge colorScheme="green" variant="solid">
+          {task.status}
+        </Badge>
+      </Flex>
+      <Text fontSize="md" mb={2}>
+        {task.description}
+      </Text>
+      <Text fontSize="sm" color="gray.500">
+        Due Date: {task.dueDate.toLocaleDateString()}
+      </Text>
+      <Button
+        colorScheme="red"
+        variant="solid"
+        size="sm"
+        onClick={() => onDelete(task.id)}
+      >
         Delete
-      </button>
-    </div>
+      </Button>
+    </Box>
   );
 };
 
