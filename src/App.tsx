@@ -99,12 +99,20 @@ const App = () => {
   return (
     <>
       <ToastContainer />
-      <Box p={5} shadow="md" borderWidth="1px" borderRadius="lg">
+      <Box
+        className="App"
+        bg="green.900"
+        color="white"
+        minHeight="50vh"
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+      >
         <Center>
           <VStack align="stretch">
             <Heading mb={4}>Task List</Heading>
             <HStack justify="flex-end">
-              <Text mb={1}>Title: </Text>
+              <Text textAlign={"left"}>Title: </Text>
               <Controller
                 name="title"
                 control={control}
