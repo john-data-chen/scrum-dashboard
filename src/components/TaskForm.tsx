@@ -98,13 +98,15 @@ const TaskForm: React.FC<TaskFormProps> = ({ onAddTask }) => {
         <Controller
           control={control}
           name="dueDate"
+          defaultValue={new Date()}
           render={({ field: { onChange, onBlur, value } }) => (
             <ReactDatePicker
-              selected={value || new Date()}
+              selected={value}
               onChange={onChange}
               dateFormat="yyyy/MM/dd"
               onBlur={onBlur}
               minDate={new Date()}
+              required
             />
           )}
         />
