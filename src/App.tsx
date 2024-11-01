@@ -2,6 +2,8 @@ import { useState } from "react";
 import AddTask from "./components/AddTask";
 import TaskList from "./components/TaskList";
 import { Heading, VStack } from "@chakra-ui/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const defaultTasks = [
   {
@@ -24,6 +26,7 @@ const App = () => {
       complete: false,
     };
     setTasks([...tasks, newTask]);
+    toast.success("Task added successfully");
   };
 
   const toggleTodo = (id: number) => {
@@ -32,15 +35,29 @@ const App = () => {
         task.id === id ? { ...task, complete: !task.complete } : task
       )
     );
+    toast.success("Updated task successfully");
   };
 
   const deleteTodo = (id: number) => {
     setTasks(tasks.filter((task) => task.id !== id));
+    toast.error("Task deleted successfully");
   };
 
   return (
     <>
-      <VStack>
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+      <VStack p={100}>
         <Heading>Todo List</Heading>
         <AddTask addTodo={addTask} />
       </VStack>
