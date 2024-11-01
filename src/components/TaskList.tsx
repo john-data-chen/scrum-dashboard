@@ -1,35 +1,29 @@
-import React from "react";
-import { Box, Heading, Stack } from "@chakra-ui/react";
-import { TaskFormType } from "../types";
-import TaskCard from "./TaskCard";
+import { Taskcard } from "./TaskCard";
+import { CheckboxGroup } from "@chakra-ui/react";
+import { Todo, ToggleTodo, DeleteTodo } from "../vite-env";
 
 interface TaskListProps {
-  tasks: TaskFormType[];
-  onDelete: (taskId: number) => void;
+  todos: Todo[];
+  toggleTodo: ToggleTodo;
+  deleteTodo: DeleteTodo;
 }
 
-const TaskList: React.FC<TaskListProps> = ({ tasks, onDelete }) => {
-  const defaultTask: TaskFormType = {
-    id: 1,
-    title: "Default Task",
-    owner: "John Doe",
-    status: "To-Do",
-    dueDate: new Date(),
-    description: "This is a default task",
-  };
-
-  if (tasks.length === 0) {
-    tasks = [defaultTask];
-  }
+export const TaskList: React.FC<TaskListProps> = ({
+  todos,
+  toggleTodo,
+  deleteTodo,
+}) => {
   return (
-    <Box>
-      <Heading mb={4}>Task List</Heading>
-      <Stack gap={4}>
-        {tasks.map((task) => (
-          <TaskCard key={task.id} task={task} onDelete={onDelete} />
-        ))}
-      </Stack>
-    </Box>
+    <CheckboxGroup>
+      {todos.map((todo) => (
+        <Taskcard
+          key={todo.id}
+          todo={todo}
+          toggleTodo={toggleTodo}
+          deleteTodo={deleteTodo}
+        />
+      ))}
+    </CheckboxGroup>
   );
 };
 

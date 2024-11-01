@@ -1,26 +1,46 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import AddTask from "./components/AddTask";
 import TaskList from "./components/TaskList";
-import TaskForm from "./components/TaskForm";
-import { TaskFormType } from "./types";
-import { Box } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 
-const App: React.FC = () => {
-  const [tasks, setTasks] = useState<TaskFormType[]>([]);
-  const [nextId, setNextId] = useState(1);
+const defaultTasks = [
+  {
+    id: 1,
+    title: "Task 1",
+    description: "Delete if you like",
+    complete: false,
+  },
+];
 
-  const addTaskHandler = (task: TaskFormType) => {
-    setTasks([...tasks, { ...task, id: nextId }]);
-    setNextId(nextId + 1);
+const App = () => {
+  const [tasks, setTasks] = useState(defaultTasks);
+  const addTask = (title: string, description: string) => {
+    const newTask = {
+      id: tasks.length + 1,
+      title,
+      description,
+      complete: false,
+    };
+    setTasks([...tasks, newTask]);
   };
 
-  const deleteTaskHandler = (taskId: number) => {
-    setTasks(tasks.filter((task) => task.id !== taskId));
+  const toggleTodo = (id: number) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, complete: !task.complete } : task
+      )
+    );
+  };
+
+  const deleteTodo = (id: number) => {
+    setTasks(tasks.filter((task) => task.id !== id));
   };
 
   return (
     <Box>
-      <TaskForm onAddTask={addTaskHandler} />
-      <TaskList tasks={tasks} onDelete={deleteTaskHandler} />
+      <Heading>Todo List</Heading>
+      <AddTask addTodo={addTask} />
+      <TaskList todos={tasks} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
     </Box>
   );
 };
