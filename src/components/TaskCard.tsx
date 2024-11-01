@@ -10,6 +10,7 @@ import {
 import React from "react";
 import { Todo, ToggleTodo, DeleteTodo } from "../vite-env";
 import { format } from "date-fns";
+import { MdDoneOutline, MdDeleteForever } from "react-icons/md";
 
 interface TaskCardProps {
   todo: Todo;
@@ -46,11 +47,15 @@ export const Taskcard: React.FC<TaskCardProps> = ({
             isChecked={todo.complete}
             onChange={() => toggleTodo(todo.id, todo.complete)}
           />
+          <MdDoneOutline />
           <Text color="green">Complete</Text>
         </HStack>
-        <Button colorScheme="red" onClick={() => deleteTodo(todo.id)}>
-          Delete
-        </Button>
+        <HStack>
+          <MdDeleteForever />
+          <Button colorScheme="red" onClick={() => deleteTodo(todo.id)}>
+            Delete
+          </Button>
+        </HStack>
       </VStack>
     </Box>
   );
