@@ -42,12 +42,15 @@ export const Taskcard: React.FC<TaskCardProps> = ({
       <VStack>
         <HStack>
           <Checkbox
+            colorScheme="green"
             isChecked={todo.complete}
             onChange={() => toggleTodo(todo.id, todo.complete)}
           />
-          <Text>Complete</Text>
+          <Text color="green">Complete</Text>
         </HStack>
-        <Button onClick={() => deleteTodo(todo.id)}>Delete</Button>
+        <Button colorScheme="red" onClick={() => deleteTodo(todo.id)}>
+          Delete
+        </Button>
       </VStack>
     </Box>
   );
