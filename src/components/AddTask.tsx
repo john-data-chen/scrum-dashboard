@@ -24,7 +24,7 @@ const AddTask: React.FC<AddTaskProps> = ({ addTodo }) => {
       <HStack>
         <Input
           type="text"
-          placeholder="Title"
+          placeholder="Title is required"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
@@ -41,7 +41,9 @@ const AddTask: React.FC<AddTaskProps> = ({ addTodo }) => {
           dateFormat="dd/MM/yyyy"
           placeholderText="Due Date"
         />
-        <Button type="submit">Add</Button>
+        <Button type="submit" colorScheme="blue" disabled={!title}>
+          Add
+        </Button>
       </HStack>
     </form>
   );
