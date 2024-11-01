@@ -1,13 +1,14 @@
 import { useState } from "react";
 import AddTask from "./components/AddTask";
 import TaskList from "./components/TaskList";
-import { Box, Heading } from "@chakra-ui/react";
+import { Heading, VStack } from "@chakra-ui/react";
 
 const defaultTasks = [
   {
     id: 1,
     title: "Task 1",
     description: "Delete if you like",
+    dueDate: new Date(),
     complete: false,
   },
 ];
@@ -19,6 +20,7 @@ const App = () => {
       id: tasks.length + 1,
       title,
       description,
+      dueDate: new Date(),
       complete: false,
     };
     setTasks([...tasks, newTask]);
@@ -37,11 +39,13 @@ const App = () => {
   };
 
   return (
-    <Box>
-      <Heading>Todo List</Heading>
-      <AddTask addTodo={addTask} />
+    <>
+      <VStack>
+        <Heading>Todo List</Heading>
+        <AddTask addTodo={addTask} />
+      </VStack>
       <TaskList todos={tasks} toggleTodo={toggleTodo} deleteTodo={deleteTodo} />
-    </Box>
+    </>
   );
 };
 

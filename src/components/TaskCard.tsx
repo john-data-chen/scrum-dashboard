@@ -1,6 +1,15 @@
-import { Box, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Checkbox,
+  Heading,
+  HStack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import React from "react";
 import { Todo, ToggleTodo, DeleteTodo } from "../vite-env";
+import { format } from "date-fns";
 
 interface TaskCardProps {
   todo: Todo;
@@ -22,32 +31,24 @@ export const Taskcard: React.FC<TaskCardProps> = ({
       borderWidth="1px"
       borderRadius="lg"
     >
-      <Text
+      <Heading
         textDecoration={todo.complete ? "line-through" : "none"}
         onClick={() => toggleTodo(todo.id, todo.complete)}
       >
         {todo.title}
-      </Text>
-      <Box>
-        <Text
-          textDecoration={todo.complete ? "line-through" : "none"}
-          onClick={() => toggleTodo(todo.id, todo.complete)}
-        >
-          {todo.description}
-        </Text>
-        <Text
-          textDecoration={todo.complete ? "line-through" : "none"}
-          onClick={() => toggleTodo(todo.id, todo.complete)}
-        >
-          {todo.complete ? "Completed" : "Not Completed"}
-        </Text>
-        <Text
-          textDecoration={todo.complete ? "line-through" : "none"}
-          onClick={() => deleteTodo(todo.id)}
-        >
-          Delete
-        </Text>
-      </Box>
+      </Heading>
+      <Text>{todo.description}</Text>
+      <Text>{format(todo.dueDate, "dd/MM/yyyy")}</Text>
+      <VStack>
+        <HStack>
+          <Checkbox
+            isChecked={todo.complete}
+            onChange={() => toggleTodo(todo.id, todo.complete)}
+          />
+          <Text>Complete</Text>
+        </HStack>
+        <Button onClick={() => deleteTodo(todo.id)}>Delete</Button>
+      </VStack>
     </Box>
   );
 };
